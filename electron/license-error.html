@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConCure License Error</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .logo {
+            margin-bottom: 20px;
+        }
+        
+        .logo h1 {
+            color: #008080;
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .logo p {
+            color: #666;
+            margin: 5px 0 0 0;
+            font-size: 14px;
+        }
+        
+        .error-icon {
+            font-size: 48px;
+            color: #dc3545;
+            margin-bottom: 20px;
+        }
+        
+        .error-content {
+            margin-bottom: 30px;
+        }
+        
+        .error-title {
+            color: #333;
+            margin: 0 0 15px 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .error-message {
+            color: #666;
+            margin: 0 0 15px 0;
+            line-height: 1.5;
+        }
+        
+        .error-details {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 15px;
+            text-align: left;
+            font-family: monospace;
+            font-size: 12px;
+            color: #495057;
+            max-height: 100px;
+            overflow-y: auto;
+            display: none;
+        }
+        
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #008080;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #006666;
+        }
+        
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #666;
+            border: 1px solid #dee2e6;
+        }
+        
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+        
+        .btn-link {
+            background: none;
+            color: #008080;
+            border: none;
+            text-decoration: underline;
+            font-size: 12px;
+            padding: 5px;
+        }
+        
+        .btn-link:hover {
+            color: #006666;
+        }
+        
+        .help-text {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>ConCure</h1>
+            <p>Clinic Management System</p>
+        </div>
+        
+        <div class="error-icon">❌</div>
+        
+        <div class="error-content">
+            <h2 id="error-title" class="error-title">License Error</h2>
+            <p id="error-message" class="error-message">An error occurred while processing your license.</p>
+            <div id="error-details" class="error-details"></div>
+        </div>
+        
+        <div class="buttons">
+            <button type="button" class="btn-primary" id="ok-btn">OK</button>
+            <button type="button" class="btn-link" id="details-btn">Show Details</button>
+        </div>
+        
+        <div class="help-text">
+            If this problem persists, please contact support with the error details above.
+        </div>
+    </div>
+
+    <script>
+        let errorInfo = null;
+        let detailsVisible = false;
+
+        // Wait for error info data
+        window.licenseAPI.onErrorInfo((data) => {
+            errorInfo = data;
+            updateErrorDisplay();
+        });
+
+        function updateErrorDisplay() {
+            // Update title
+            document.getElementById('error-title').textContent = errorInfo.title || 'License Error';
+            
+            // Update message
+            document.getElementById('error-message').textContent = errorInfo.message || 'An error occurred while processing your license.';
+            
+            // Update details if available
+            const detailsElement = document.getElementById('error-details');
+            const detailsBtn = document.getElementById('details-btn');
+            
+            if (errorInfo.details) {
+                detailsElement.textContent = errorInfo.details;
+                detailsBtn.style.display = 'block';
+            } else {
+                detailsBtn.style.display = 'none';
+            }
+        }
+
+        // Handle OK button
+        document.getElementById('ok-btn').addEventListener('click', function() {
+            window.licenseAPI.closeError();
+        });
+
+        // Handle details toggle
+        document.getElementById('details-btn').addEventListener('click', function() {
+            const detailsElement = document.getElementById('error-details');
+            const detailsBtn = document.getElementById('details-btn');
+            
+            detailsVisible = !detailsVisible;
+            
+            if (detailsVisible) {
+                detailsElement.style.display = 'block';
+                detailsBtn.textContent = 'Hide Details';
+            } else {
+                detailsElement.style.display = 'none';
+                detailsBtn.textContent = 'Show Details';
+            }
+        });
+
+        // Handle Enter key
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('ok-btn').click();
+            }
+        });
+    </script>
+</body>
+</html>

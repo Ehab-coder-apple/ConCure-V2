@@ -1,0 +1,49 @@
+name: Build Windows Installer
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+    paths:
+      - '**/*.js'
+      - '**/*.json'
+      - 'electron/**'
+      - 'resources/**'
+      - 'package-lock.json'
+      - '.github/workflows/build-windows.yml'
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Prepare bundled PHP for Windows
+        run: node tools/prepare_php_win.js
+
+      - name: Build renderer
+        run: npm run build
+
+      - name: Build Windows installer (NSIS one-click)
+        run: npx electron-builder --win
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: concure-windows-installer
+          path: |
+            dist-electron/*.exe
+            dist-electron/win-*/**
+

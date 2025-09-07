@@ -1,0 +1,154 @@
+{
+    "name": "concure-clinic-management",
+    "version": "1.0.0",
+    "description": "ConCure Clinic Management System - Desktop Application",
+    "main": "electron/main.js",
+    "homepage": "https://github.com/your-repo/concure-clinic#readme",
+    "private": true,
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "watch": "vite build --watch",
+        "hot": "vite --host",
+        "preview": "vite preview",
+        "electron": "electron .",
+        "electron-dev": "concurrently \"npm run dev\" \"wait-on http://localhost:5173 && electron .\"",
+        "electron-pack": "npm run build && electron-builder",
+        "dist": "npm run build && electron-builder --publish=never",
+        "dist-mac": "npm run build && electron-builder --mac",
+        "dist-win": "node tools/prepare_php_win.js && npm run build && electron-builder --win",
+        "dist-linux": "npm run build && electron-builder --linux"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-free": "^6.4.0",
+        "chart.js": "^4.3.0",
+        "node-machine-id": "^1.1.12",
+        "sweetalert2": "^11.7.0"
+    },
+    "devDependencies": {
+        "@popperjs/core": "^2.11.8",
+        "bootstrap": "^5.3.0",
+        "concurrently": "^8.2.2",
+        "electron": "^27.0.0",
+        "electron-builder": "^24.6.4",
+        "laravel-vite-plugin": "^0.8.0",
+        "sass": "^1.56.1",
+        "vite": "^4.0.0",
+        "wait-on": "^7.2.0"
+    },
+    "keywords": [
+        "clinic",
+        "management",
+        "healthcare",
+        "laravel",
+        "bootstrap",
+        "medical"
+    ],
+    "author": "Connect Pure",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/your-repo/concure-clinic"
+    },
+    "bugs": {
+        "url": "https://github.com/your-repo/concure-clinic/issues"
+    },
+    "build": {
+        "appId": "com.connectpure.concure",
+        "productName": "ConCure Clinic Management",
+        "directories": {
+            "output": "dist-electron"
+        },
+        "asarUnpack": [
+            "php/win/**"
+        ],
+        "files": [
+            "electron/**/*",
+            "public/**/*",
+            "database/**/*",
+            "storage/**/*",
+            "vendor/**/*",
+            "app/**/*",
+            "bootstrap/**/*",
+            "config/**/*",
+            "resources/**/*",
+            "routes/**/*",
+            "node_modules/**/*",
+            "package.json",
+            "package-lock.json",
+            "artisan",
+            "composer.json",
+            "composer.lock",
+            ".env.example",
+            "!**/php/**",
+            {
+                "from": "electron/php/win",
+                "to": "php/win",
+                "filter": ["**/*"]
+            }
+        ],
+
+        "mac": {
+            "category": "public.app-category.medical",
+            "identity": null,
+            "gatekeeperAssess": false,
+            "hardenedRuntime": false,
+            "entitlements": null,
+            "entitlementsInherit": null,
+            "type": "distribution",
+            "extendInfo": {
+                "LSUIElement": false
+            },
+            "fileAssociations": [
+                {
+                    "ext": ["concurelic"],
+                    "name": "ConCure License File",
+                    "role": "Editor"
+                }
+            ],
+            "target": [
+                {
+                    "target": "dmg",
+                    "arch": [
+                        "x64",
+                        "arm64"
+                    ]
+                }
+            ]
+        },
+        "win": {
+            "target": [
+                {
+                    "target": "nsis",
+                    "arch": ["x64"]
+                }
+            ],
+            "requestedExecutionLevel": "asInvoker",
+            "fileAssociations": [
+                {
+                    "ext": ["concurelic"],
+                    "name": "ConCure License File",
+                    "role": "Editor"
+                }
+            ]
+        },
+        "linux": {
+            "icon": "electron/assets/icon.png",
+            "target": [
+                {
+                    "target": "AppImage",
+                    "arch": [
+                        "x64"
+                    ]
+                }
+            ]
+        },
+        "nsis": {
+            "oneClick": true,
+            "allowToChangeInstallationDirectory": false,
+            "perMachine": false,
+            "createDesktopShortcut": true,
+            "createStartMenuShortcut": true
+        }
+    }
+}

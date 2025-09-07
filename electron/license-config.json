@@ -1,0 +1,58 @@
+{
+  "licenseServerUrl": "http://127.0.0.1:8000/api/license",
+  "purchaseUrl": "https://your-website.com/purchase",
+  "supportEmail": "support@your-company.com",
+  "companyName": "Connect Pure",
+  "productName": "ConCure Clinic Management",
+  "version": "1.0.0",
+  "offlineGracePeriodHours": 24,
+  "validationIntervalHours": 4,
+  "trialDays": 30,
+  "features": {
+    "trial": [
+      "patient_management",
+      "basic_checkups",
+      "basic_prescriptions",
+      "basic_reports"
+    ],
+    "standard": [
+      "patient_management",
+      "checkups",
+      "prescriptions",
+      "appointments",
+      "basic_reports",
+      "medicine_management",
+      "lab_requests"
+    ],
+    "premium": [
+      "patient_management",
+      "checkups",
+      "prescriptions",
+      "appointments",
+      "reports",
+      "medicine_management",
+      "lab_requests",
+      "nutrition_plans",
+      "finance_management",
+      "user_management",
+      "whatsapp_integration"
+    ],
+    "enterprise": [
+      "patient_management",
+      "checkups",
+      "prescriptions",
+      "appointments",
+      "advanced_reports",
+      "medicine_management",
+      "lab_requests",
+      "nutrition_plans",
+      "finance_management",
+      "user_management",
+      "whatsapp_integration",
+      "api_access",
+      "custom_forms",
+      "advanced_analytics",
+      "multi_clinic"
+    ]
+  }
+}

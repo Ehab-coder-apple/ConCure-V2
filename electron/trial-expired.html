@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConCure Trial Status</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .logo {
+            margin-bottom: 20px;
+        }
+        
+        .logo h1 {
+            color: #008080;
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .logo p {
+            color: #666;
+            margin: 5px 0 0 0;
+            font-size: 14px;
+        }
+        
+        .icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .icon.warning {
+            color: #ffc107;
+        }
+        
+        .icon.expired {
+            color: #dc3545;
+        }
+        
+        .message {
+            margin-bottom: 30px;
+        }
+        
+        .message h2 {
+            color: #333;
+            margin: 0 0 10px 0;
+            font-size: 20px;
+        }
+        
+        .message p {
+            color: #666;
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        .trial-days {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .trial-days.expired {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #008080;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #006666;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #218838;
+        }
+        
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #666;
+            border: 1px solid #dee2e6;
+        }
+        
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+        
+        .purchase-link {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .purchase-link a {
+            color: #008080;
+            text-decoration: none;
+        }
+        
+        .purchase-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>ConCure</h1>
+            <p>Clinic Management System</p>
+        </div>
+        
+        <div id="trial-icon" class="icon warning">⚠️</div>
+        
+        <div class="message">
+            <h2 id="message-title">Trial Expired</h2>
+            <p id="message-text">Your ConCure trial has expired. Please import your license file to continue.</p>
+        </div>
+        
+        <div id="trial-status" class="trial-days">
+            <span id="days-remaining">7 days remaining</span>
+        </div>
+        
+        <div class="buttons">
+            <button type="button" class="btn-success" id="enter-key-btn">Import License File</button>
+            <button type="button" class="btn-secondary" id="continue-btn" style="display: none;">Continue Trial</button>
+        </div>
+        
+        <div class="purchase-link">
+            <p>Need help? <a href="#" id="support-link">Contact Support</a></p>
+        </div>
+    </div>
+
+    <script>
+        let trialInfo = null;
+
+        // Wait for trial info data
+        window.licenseAPI.onTrialInfo((data) => {
+            trialInfo = data;
+            updateTrialDisplay();
+        });
+
+        function updateTrialDisplay() {
+            const daysRemaining = trialInfo.daysRemaining;
+            const isExpired = daysRemaining <= 0;
+            
+            // Update icon
+            const iconElement = document.getElementById('trial-icon');
+            if (isExpired) {
+                iconElement.textContent = '❌';
+                iconElement.className = 'icon expired';
+            } else {
+                iconElement.textContent = '⚠️';
+                iconElement.className = 'icon warning';
+            }
+            
+            // Update message
+            const titleElement = document.getElementById('message-title');
+            const textElement = document.getElementById('message-text');
+            
+            if (isExpired) {
+                titleElement.textContent = 'Trial Expired';
+                textElement.textContent = 'Your ConCure trial has expired. Please import your license file to continue.';
+            } else if (daysRemaining <= 3) {
+                titleElement.textContent = 'Trial Expiring Soon';
+                textElement.textContent = 'Your ConCure trial is expiring very soon. Please purchase a license to avoid interruption.';
+            } else {
+                titleElement.textContent = 'Trial Expiring';
+                textElement.textContent = 'Your ConCure trial is expiring soon. Please purchase a license to continue using the application.';
+            }
+            
+            // Update trial status
+            const statusElement = document.getElementById('trial-status');
+            const daysElement = document.getElementById('days-remaining');
+            
+            if (isExpired) {
+                statusElement.className = 'trial-days expired';
+                daysElement.textContent = 'Trial has expired';
+            } else {
+                statusElement.className = 'trial-days';
+                if (daysRemaining === 1) {
+                    daysElement.textContent = '1 day remaining';
+                } else {
+                    daysElement.textContent = `${daysRemaining} days remaining`;
+                }
+            }
+            
+            // Show/hide continue button
+            const continueBtn = document.getElementById('continue-btn');
+            if (daysRemaining > 0) {
+                continueBtn.style.display = 'block';
+            } else {
+                continueBtn.style.display = 'none';
+            }
+        }
+
+        // Handle purchase button
+        document.getElementById('purchase-btn').addEventListener('click', function() {
+            window.licenseAPI.purchaseLicense();
+        });
+
+        // Handle import license file button
+        document.getElementById('enter-key-btn').addEventListener('click', function() {
+            window.licenseAPI.importLicenseFile();
+        });
+
+        // Handle continue trial button
+        document.getElementById('continue-btn').addEventListener('click', function() {
+            window.licenseAPI.continueTrial();
+        });
+
+        // Handle support link
+        document.getElementById('support-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.licenseAPI.openExternal('mailto:support@your-company.com');
+        });
+    </script>
+</body>
+</html>

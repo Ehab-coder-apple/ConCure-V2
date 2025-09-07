@@ -1,0 +1,24 @@
+Lab Result Report
+==================
+
+Patient: Ahmed Ali
+Patient ID: DEM-2278
+Lab Request: LAB-20250824-027
+
+Test Results:
+1. Complete Blood Count (CBC)
+   - White Blood Cells: 7,500 cells/μL (Normal: 4,000-11,000)
+   - Red Blood Cells: 4.8 million cells/μL (Normal: 4.2-5.4)
+   - Hemoglobin: 14.2 g/dL (Normal: 12.0-16.0)
+   - Hematocrit: 42% (Normal: 36-46%)
+   - Platelets: 250,000 cells/μL (Normal: 150,000-450,000)
+
+2. Blood Sugar Level
+   - Fasting Glucose: 95 mg/dL (Normal: 70-100)
+
+Interpretation:
+All test results are within normal limits.
+
+Laboratory: Test Laboratory
+Date: August 24, 2025
+Technician: Lab Tech

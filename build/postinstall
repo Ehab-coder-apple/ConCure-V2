@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# ConCure Clinic Management - Post Install Script
+# Automatically removes quarantine attributes after installation
+
+APP_PATH="/Applications/ConCure Clinic Management.app"
+
+if [ -d "$APP_PATH" ]; then
+    # Remove quarantine attributes
+    xattr -rd com.apple.quarantine "$APP_PATH" 2>/dev/null || true
+    xattr -c "$APP_PATH" 2>/dev/null || true
+    
+    # Set proper permissions
+    chmod -R 755 "$APP_PATH" 2>/dev/null || true
+    
+    # Create a success indicator
+    echo "ConCure Clinic Management installed successfully!" > /tmp/concure-install-success
+fi
+
+exit 0

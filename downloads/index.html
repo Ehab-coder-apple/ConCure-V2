@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download ConCure - Clinic Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: #008080;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+        
+        .version {
+            background: #e8f5e8;
+            color: #2d5a2d;
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        
+        .download-section {
+            margin: 30px 0;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #008080, #20b2aa);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            margin: 10px;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: transform 0.2s, box-shadow 0.2s;
+            min-width: 200px;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,128,128,0.3);
+        }
+        
+        .download-btn.secondary {
+            background: linear-gradient(45deg, #6c757d, #495057);
+        }
+        
+        .platform-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .feature-list {
+            text-align: left;
+            margin: 20px 0;
+        }
+        
+        .feature-list li {
+            margin: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .feature-list li:before {
+            content: "✓";
+            color: #008080;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .system-requirements {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .license-info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">CC</div>
+        <h1>ConCure</h1>
+        <p class="subtitle">Professional Clinic Management System</p>
+        <div class="version">Version 1.0.0</div>
+        
+        <div class="download-section">
+            <h2>📱 Download for macOS</h2>
+            <a href="./ConCure Clinic Management-1.0.0.dmg" class="download-btn">
+                💻 Download for Intel Mac
+                <br><small>macOS 10.12+ (132 MB)</small>
+            </a>
+            <a href="./ConCure Clinic Management-1.0.0-arm64.dmg" class="download-btn">
+                🚀 Download for Apple Silicon
+                <br><small>macOS 11+ (128 MB)</small>
+            </a>
+
+            <h2 style="margin-top: 40px;">🪟 Download for Windows</h2>
+            <a href="./ConCure-Windows-Setup.zip" class="download-btn">
+                🪟 Download for Windows
+                <br><small>Windows 10/11 (Setup Package)</small>
+            </a>
+            <a href="./windows-installation-guide.md" class="download-btn secondary">
+                📖 Windows Installation Guide
+                <br><small>Step-by-step instructions</small>
+            </a>
+        </div>
+        
+        <div class="platform-info">
+            <h3>🖥️ System Requirements</h3>
+            <ul>
+                <li><strong>macOS:</strong> 10.12 (Sierra) or later</li>
+                <li><strong>RAM:</strong> 4 GB minimum, 8 GB recommended</li>
+                <li><strong>Storage:</strong> 500 MB free space</li>
+                <li><strong>Internet:</strong> Required for license activation</li>
+            </ul>
+        </div>
+        
+        <div class="license-info">
+            <h3>🔑 License Activation</h3>
+            <p>After installation, you'll need a valid license key to activate ConCure. Contact your administrator or sales team for license keys.</p>
+            <p><strong>Trial licenses available for evaluation purposes.</strong></p>
+        </div>
+        
+        <div class="feature-list">
+            <h3>✨ Key Features</h3>
+            <ul>
+                <li>Complete Patient Management</li>
+                <li>Appointment Scheduling</li>
+                <li>Medical Records & History</li>
+                <li>Billing & Invoicing</li>
+                <li>Reports & Analytics</li>
+                <li>Offline Operation</li>
+                <li>Secure Data Storage</li>
+                <li>Multi-user Support</li>
+            </ul>
+        </div>
+        
+        <div class="system-requirements">
+            <h3>⚠️ macOS Security Warning</h3>
+            <p><strong>If you see "Apple could not verify ConCure is free of malware":</strong></p>
+            <ol style="text-align: left; margin: 10px 0;">
+                <li>Click <strong>"Cancel"</strong> (don't click "Move to Trash")</li>
+                <li>Go to Applications folder</li>
+                <li><strong>Right-click</strong> on ConCure app</li>
+                <li>Select <strong>"Open"</strong> from menu</li>
+                <li>Click <strong>"Open"</strong> to confirm</li>
+            </ol>
+            <p><em>This warning is normal for unsigned apps. ConCure is completely safe!</em></p>
+            <a href="./macos-security-guide.md" style="color: #008080; text-decoration: underline;">📖 Detailed Security Guide</a>
+        </div>
+
+        <div class="system-requirements">
+            <h3>📋 Installation Notes</h3>
+            <ul>
+                <li>License activation requires internet connection</li>
+                <li>Application runs offline after activation</li>
+                <li>Windows users: Install Node.js and PHP first</li>
+                <li>Contact support for installation assistance</li>
+            </ul>
+        </div>
+        
+        <p style="margin-top: 30px; color: #666; font-size: 0.9em;">
+            © 2024 ConCure. All rights reserved. | Version 1.0.0
+        </p>
+    </div>
+</body>
+</html>
