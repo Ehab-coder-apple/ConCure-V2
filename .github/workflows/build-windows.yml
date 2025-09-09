@@ -9,6 +9,8 @@ on:
       - '**/*.json'
       - 'electron/**'
       - 'resources/**'
+      - 'scripts/windows/**'
+      - 'build/**'
       - 'package-lock.json'
       - '.github/workflows/build-windows.yml'
 
