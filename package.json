@@ -80,12 +80,10 @@
             "composer.json",
             "composer.lock",
             ".env.example",
-            "!**/php/**",
-            {
-                "from": "electron/php/win",
-                "to": "php/win",
-                "filter": ["**/*"]
-            }
+            "!**/php/**"
+        ],
+        "extraResources": [
+            { "from": "electron/php/win", "to": "php/win" }
         ],
 
         "mac": {
