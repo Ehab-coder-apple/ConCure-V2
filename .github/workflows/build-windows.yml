@@ -36,17 +36,59 @@ jobs:
       - name: Build renderer
         run: npm run build
 
+      - name: Build Windows unpacked (dir) for verification
+        run: npx electron-builder --win --dir --publish=never
+        env:
+          DEBUG: electron-builder
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+
+      - name: Inspect packaged resources (launcher presence)
+        shell: pwsh
+        run: |
+          $dir = Get-ChildItem -Directory "dist-electron" | Where-Object { $_.Name -like 'win-*' } | Select-Object -First 1
+          if (-not $dir) { Write-Error "No win-* directory found in dist-electron"; exit 1 }
+          $res = Join-Path $dir.FullName 'resources'
+          Write-Host "Inspecting $res"
+          if (Test-Path (Join-Path $res 'launcher')) {
+            Write-Host '✅ launcher folder found'
+            Get-ChildItem (Join-Path $res 'launcher') -Recurse | Select-Object FullName | Format-Table -AutoSize
+          } else {
+            Write-Error '❌ launcher folder NOT found'
+            Get-ChildItem $res -Recurse | Select-Object FullName | Format-Table -AutoSize
+            exit 1
+          }
+
+      - name: Show builder effective config (if exists)
+        shell: pwsh
+        run: |
+          if (Test-Path 'dist-electron/builder-effective-config.yaml') {
+            Get-Content 'dist-electron/builder-effective-config.yaml' | Select-Object -First 80
+          } else {
+            Write-Host 'builder-effective-config.yaml not found yet.'
+          }
+
       - name: Build Windows installer (NSIS one-click)
         run: npx electron-builder --win --publish=never
         env:
+          DEBUG: electron-builder
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload installer artifact
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: concure-windows-installer
           path: |
             dist-electron/*.exe
             dist-electron/win-*/**
+
+      - name: Upload debug artifacts (always)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-build-debug
+          path: |
+            dist-electron/builder-effective-config.yaml
+            dist-electron/win-*/resources/**
 
