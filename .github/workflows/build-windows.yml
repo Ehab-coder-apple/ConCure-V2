@@ -68,11 +68,18 @@ jobs:
           }
 
       - name: Build Windows installer (NSIS one-click)
+        continue-on-error: true
         run: npx electron-builder --win --publish=never
         env:
           DEBUG: electron-builder
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Tree dist-electron (for debugging)
+        if: always()
+        shell: pwsh
+        run: |
+          Get-ChildItem -Recurse -Force dist-electron | Select-Object FullName, Length | Format-Table -AutoSize
 
       - name: Upload installer artifact
         if: success()
