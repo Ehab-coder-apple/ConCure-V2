@@ -1,0 +1,57 @@
+name: Release Windows Installer
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag to build (e.g., v1.2.3). If empty, uses the ref tag.'
+        required: false
+
+jobs:
+  release-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Prepare bundled PHP for Windows
+        run: node tools/prepare_php_win.js
+
+      - name: Build renderer
+        run: npm run build
+
+      - name: Build Windows installer and publish to GitHub Releases
+        run: npx electron-builder --win --publish always
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+
+      - name: Upload installer artifact (backup)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: concure-windows-installer-release
+          path: |
+            dist-electron/*.exe
+            dist-electron/win-*/**
+
+      - name: Upload builder config (debug)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-release-debug
+          path: |
+            dist-electron/builder-effective-config.yaml
+
